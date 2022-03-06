@@ -21,6 +21,17 @@ public class Votacao {
 	
 	@Enumerated(EnumType.STRING)
 	private VotacaoEnum voto;
+	
+	
+
+	public Votacao() {
+	}
+
+	public Votacao(Pauta pauta, User user, VotacaoEnum voto) {
+		this.pauta = pauta;
+		this.user = user;
+		this.voto = voto;
+	}
 
 	public long getId() {
 		return id;
