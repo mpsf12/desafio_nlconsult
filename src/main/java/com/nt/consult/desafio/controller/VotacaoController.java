@@ -1,17 +1,13 @@
 package com.nt.consult.desafio.controller;
 
-import com.nt.consult.desafio.exception.PautaNotFoundException;
-import com.nt.consult.desafio.exception.SessaoEncerradaException;
-import com.nt.consult.desafio.exception.SessaoNotFoundException;
-import com.nt.consult.desafio.exception.UserNotFoundException;
-import com.nt.consult.desafio.model.Pauta;
-import com.nt.consult.desafio.model.Sessao;
-import com.nt.consult.desafio.model.User;
-import com.nt.consult.desafio.model.Votacao;
+import com.nt.consult.desafio.exception.*;
+import com.nt.consult.desafio.model.*;
 import com.nt.consult.desafio.repository.PautaRepository;
 import com.nt.consult.desafio.repository.SessaoRepository;
 import com.nt.consult.desafio.repository.UserRepository;
 import com.nt.consult.desafio.repository.VotacaoRepository;
+import com.nt.consult.desafio.util.HttpRequest;
+import com.nt.consult.desafio.util.UserPodeVotarEnum;
 import com.nt.consult.desafio.util.VotacaoEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +31,8 @@ public class VotacaoController {
 	private PautaRepository pautaRepository;
 	@Autowired
 	private SessaoRepository sessaoRepository;
+
+	private String urlPermissaoVoto = "https://user-info.herokuapp.com/users/";
         
     @GetMapping
     public List<Votacao> findAllVotacaos() {
@@ -54,7 +53,7 @@ public class VotacaoController {
     @GetMapping("/{user_id}/{pauta_id}/{voto}")
     public ResponseEntity<Votacao> votarPauta(@PathVariable(value = "user_id") long user_id, 
     		@PathVariable(value = "pauta_id") long pauta_id, 
-    		@PathVariable(value = "voto") VotacaoEnum voto){
+    		@PathVariable(value = "voto") VotacaoEnum voto) throws Exception {
     	Optional<User> user = userRepository.findById(user_id);
     	Optional<Pauta> pauta = pautaRepository.findById(pauta_id); 
     	
@@ -62,7 +61,25 @@ public class VotacaoController {
     		Optional<Sessao> sessao = sessaoRepository.findByPauta(pauta.get());
     		if(!sessao.isEmpty()) {
     			if(!sessao.get().sessaoFinalizada()) {
-    				Votacao votacao = new Votacao(pauta.get(), user.get(), voto);
+
+					String url = urlPermissaoVoto + user.get().getCpf();
+					HttpRequest<UserPodeVotar> request = new HttpRequest<>();
+					UserPodeVotar userPodeVotar;
+					try {
+						userPodeVotar = request.get(url, UserPodeVotar.class);
+					} catch (IOException e) {
+						e.printStackTrace();
+						throw e;
+					}
+					if(userPodeVotar != null){
+						if(userPodeVotar.getStatus() == UserPodeVotarEnum.UNABLE_TO_VOTE){
+							throw new UserNaoAutorizadoAVotarException("User de cpf: " + user.get().getCpf() + " não foi autorizado à votar.");
+						}
+					} else {
+						throw new CPFInvalidoException("O CPF " + user.get().getCpf() + " é inválido.");
+					}
+
+					Votacao votacao = new Votacao(pauta.get(), user.get(), voto);
     				votacaoRepository.save(votacao);
     				return ResponseEntity.ok().body(votacao);
     			} else {
