@@ -4,8 +4,17 @@ import javax.persistence.*;
 
 import com.nt.consult.desafio.util.VotacaoEnum;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "votacao")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Votacao {
 
 	@Id
@@ -21,50 +30,12 @@ public class Votacao {
 	
 	@Enumerated(EnumType.STRING)
 	private VotacaoEnum voto;
-	
-	
-
-	public Votacao() {
-	}
 
 	public Votacao(Pauta pauta, User user, VotacaoEnum voto) {
+		super();
 		this.pauta = pauta;
 		this.user = user;
 		this.voto = voto;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public Pauta getPauta() {
-		return pauta;
-	}
-
-	public void setPauta(Pauta pauta) {
-		this.pauta = pauta;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public VotacaoEnum getVoto() {
-		return voto;
-	}
-
-	public void setVoto(VotacaoEnum voto) {
-		this.voto = voto;
-	}
-	
-	
-	
 }

@@ -41,7 +41,7 @@ public class PautaController {
 		if (Pauta.isPresent()) {
 			return ResponseEntity.ok().body(Pauta.get());
 		} else {
-			return ResponseEntity.notFound().build();
+			throw new PautaNotFoundException("Não foi possível encontrar a pauta de id " + id);
 		}
 	}
 
@@ -56,6 +56,8 @@ public class PautaController {
 					throw new SessaoNaoFinalizadaException(
 							"Sessao de votação da Pauta de id " + id + " ainda nao foi finalizada.");
 				}
+			} else {
+				throw new SessaoNotFoundException("Não foi possivel encontrar a sessão da Pauta de id " + id );
 			}
 			List<Votacao> votacao = votacaoRepository.findByPauta(pauta.get());
 			int sim = 0, nao = 0;
