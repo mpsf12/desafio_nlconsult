@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.nt.consult.desafio.model.Sessao;
-
 @RestController
 @RequestMapping("/api/sessao")
 public class SessaoController {

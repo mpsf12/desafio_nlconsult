@@ -1,7 +1,6 @@
 package com.nt.consult.desafio.controller;
 
 import com.nt.consult.desafio.dto.VotacaoDto;
-import com.nt.consult.desafio.model.*;
 import com.nt.consult.desafio.service.VotacaoService;
 import com.nt.consult.desafio.enums.VotacaoEnum;
 

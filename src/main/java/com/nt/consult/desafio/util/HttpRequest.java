@@ -1,7 +1,6 @@
 package com.nt.consult.desafio.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nt.consult.desafio.model.UserPodeVotar;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,7 +1,6 @@
 package com.nt.consult.desafio.controller;
 
 import com.nt.consult.desafio.dto.PautaDto;
-import com.nt.consult.desafio.model.Pauta;
 import com.nt.consult.desafio.service.PautaService;
 import com.nt.consult.desafio.enums.ResultadoPautaEnum;
 

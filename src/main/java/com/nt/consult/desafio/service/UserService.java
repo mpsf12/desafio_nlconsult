@@ -1,7 +1,6 @@
 package com.nt.consult.desafio.service;
 
 import com.nt.consult.desafio.dto.UserDto;
-import com.nt.consult.desafio.model.User;
 
 import java.util.List;
 

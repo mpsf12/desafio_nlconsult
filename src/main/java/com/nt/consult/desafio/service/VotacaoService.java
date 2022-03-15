@@ -1,7 +1,6 @@
 package com.nt.consult.desafio.service;
 
 import com.nt.consult.desafio.dto.VotacaoDto;
-import com.nt.consult.desafio.model.Votacao;
 import com.nt.consult.desafio.enums.VotacaoEnum;
 
 import java.io.IOException;
