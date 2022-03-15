@@ -1,5 +1,6 @@
 package com.nt.consult.desafio.service.impl;
 
+import com.nt.consult.desafio.dto.VotacaoDto;
 import com.nt.consult.desafio.exception.*;
 import com.nt.consult.desafio.model.*;
 import com.nt.consult.desafio.repository.PautaRepository;
@@ -10,14 +11,19 @@ import com.nt.consult.desafio.service.VotacaoService;
 import com.nt.consult.desafio.util.HttpRequest;
 import com.nt.consult.desafio.enums.UserPodeVotarEnum;
 import com.nt.consult.desafio.enums.VotacaoEnum;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Service
+@NoArgsConstructor
 public class VotacaoServiceImpl implements VotacaoService {
 
     private static final Logger log = LoggerFactory.getLogger(VotacaoServiceImpl.class);
@@ -34,23 +40,26 @@ public class VotacaoServiceImpl implements VotacaoService {
     private String urlPermissaoVoto = "https://user-info.herokuapp.com/users/";
 
     @Override
-    public List<Votacao> findAllVotacaos() {
-        return (List<Votacao>) votacaoRepository.findAll();
+    public List<VotacaoDto> findAllVotacaos() {
+        return ((List<Votacao>) votacaoRepository.findAll())
+                .stream()
+                .map(votacao -> new VotacaoDto(votacao))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Votacao findVotacaoById(long id) throws Exception {
-        Optional<Votacao> Votacao = votacaoRepository.findById(id);
+    public VotacaoDto findVotacaoById(long id) throws Exception {
+        Optional<Votacao> votacao = votacaoRepository.findById(id);
 
-        if(Votacao.isPresent()) {
-            return Votacao.get();
+        if(votacao.isPresent()) {
+            return new VotacaoDto(votacao.get());
         } else {
             throw new Exception();
         }
     }
 
     @Override
-    public Votacao votarPauta(long userId, long pautaId, VotacaoEnum voto) throws IOException {
+    public VotacaoDto votarPauta(long userId, long pautaId, VotacaoEnum voto) throws IOException {
         Optional<User> user = userRepository.findById(userId);
         Optional<Pauta> pauta = pautaRepository.findById(pautaId);
 
@@ -78,7 +87,7 @@ public class VotacaoServiceImpl implements VotacaoService {
 
                     Votacao votacao = new Votacao(pauta.get(), user.get(), voto);
                     votacaoRepository.save(votacao);
-                    return votacao;
+                    return new VotacaoDto(votacao);
                 } else {
                     throw new SessaoEncerradaException("Sessão já concluída.");
                 }
@@ -95,7 +104,18 @@ public class VotacaoServiceImpl implements VotacaoService {
     }
 
     @Override
-    public Votacao saveVotacao(Votacao votacao) {
-        return votacaoRepository.save(votacao);
+    public VotacaoDto saveVotacao(VotacaoDto votacaoDto) {
+        return new VotacaoDto(votacaoRepository.save(dtoToEntity(votacaoDto)));
+    }
+
+    private Votacao dtoToEntity(VotacaoDto votacaoDto){
+        Votacao votacao = new Votacao();
+        votacao.setId(votacaoDto.getId());
+        votacao.setVoto(votacaoDto.getVoto());
+
+        votacao.setPauta(pautaRepository.findById(votacaoDto.getPautaId()).get());
+        votacao.setUser(userRepository.findById(votacaoDto.getUserId()).get());
+
+        return votacao;
     }
 }

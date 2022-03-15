@@ -1,5 +1,6 @@
 package com.nt.consult.desafio.controller;
 
+import com.nt.consult.desafio.dto.PautaDto;
 import com.nt.consult.desafio.model.Pauta;
 import com.nt.consult.desafio.service.PautaService;
 import com.nt.consult.desafio.enums.ResultadoPautaEnum;
@@ -19,12 +20,12 @@ public class PautaController {
 	private PautaService pautaService;
 
 	@GetMapping
-	public List<Pauta> findAllPautas() {
+	public List<PautaDto> findAllPautas() {
 		return pautaService.findAllPautas();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Pauta> findPautaById(@PathVariable(value = "id") long id) {
+	public ResponseEntity<PautaDto> findPautaById(@PathVariable(value = "id") long id) {
 		return ResponseEntity.ok().body(pautaService.findPautaById(id));
 	}
 
@@ -35,7 +36,7 @@ public class PautaController {
 	}
 
 	@PostMapping
-	public Pauta savePauta(@Validated @RequestBody Pauta pauta) {
-		return pautaService.savePauta(pauta);
+	public PautaDto savePauta(@Validated @RequestBody PautaDto pautaDto) {
+		return pautaService.savePauta(pautaDto);
 	}
 }

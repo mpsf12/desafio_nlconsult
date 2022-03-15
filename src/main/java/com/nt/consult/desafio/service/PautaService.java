@@ -1,17 +1,17 @@
 package com.nt.consult.desafio.service;
 
-import com.nt.consult.desafio.model.Pauta;
+import com.nt.consult.desafio.dto.PautaDto;
 import com.nt.consult.desafio.enums.ResultadoPautaEnum;
 
 import java.util.List;
 
 public interface PautaService {
 
-    public List<Pauta> findAllPautas();
+    public List<PautaDto> findAllPautas();
 
-    public Pauta findPautaById(long id);
+    public PautaDto findPautaById(long id);
 
-    public Pauta savePauta(Pauta pauta);
+    public PautaDto savePauta(PautaDto pautaDto);
 
     public ResultadoPautaEnum contabilizarVotacaoPauta(long pautaId);
 }

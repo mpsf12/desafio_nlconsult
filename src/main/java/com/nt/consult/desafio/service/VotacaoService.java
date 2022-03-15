@@ -1,5 +1,6 @@
 package com.nt.consult.desafio.service;
 
+import com.nt.consult.desafio.dto.VotacaoDto;
 import com.nt.consult.desafio.model.Votacao;
 import com.nt.consult.desafio.enums.VotacaoEnum;
 
@@ -8,11 +9,11 @@ import java.util.List;
 
 public interface VotacaoService {
 
-    public List<Votacao> findAllVotacaos();
+    public List<VotacaoDto> findAllVotacaos();
 
-    public Votacao findVotacaoById(long id) throws Exception;
+    public VotacaoDto findVotacaoById(long id) throws Exception;
 
-    public Votacao votarPauta(long userId, long pautaId, VotacaoEnum voto) throws IOException;
+    public VotacaoDto votarPauta(long userId, long pautaId, VotacaoEnum voto) throws IOException;
 
-    public Votacao saveVotacao(Votacao votacao);
+    public VotacaoDto saveVotacao(VotacaoDto votacao);
 }

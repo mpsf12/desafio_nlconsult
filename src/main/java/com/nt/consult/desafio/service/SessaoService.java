@@ -1,5 +1,6 @@
 package com.nt.consult.desafio.service;
 
+import com.nt.consult.desafio.dto.SessaoDto;
 import com.nt.consult.desafio.model.Sessao;
 import org.springframework.http.ResponseEntity;
 
@@ -7,11 +8,11 @@ import java.util.List;
 
 public interface SessaoService {
 
-    public List<Sessao> findAllSessoes();
+    public List<SessaoDto> findAllSessoes();
 
-    public Sessao saveSessao(Sessao sessao);
+    public SessaoDto saveSessao(SessaoDto sessaoDto);
 
-    public ResponseEntity<Sessao> abrirSessaoVotacao(long pautaId);
+    public SessaoDto abrirSessaoVotacao(long pautaId);
 
-    public ResponseEntity<Sessao> abrirSessaoVotacao(long pautaId, long duracao);
+    public SessaoDto abrirSessaoVotacao(long pautaId, long duracao);
 }

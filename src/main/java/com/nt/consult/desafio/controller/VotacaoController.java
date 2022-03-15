@@ -1,5 +1,6 @@
 package com.nt.consult.desafio.controller;
 
+import com.nt.consult.desafio.dto.VotacaoDto;
 import com.nt.consult.desafio.model.*;
 import com.nt.consult.desafio.service.VotacaoService;
 import com.nt.consult.desafio.enums.VotacaoEnum;
@@ -19,24 +20,24 @@ public class VotacaoController {
     private VotacaoService votacaoService;
 
     @GetMapping
-    public List<Votacao> findAllVotacaos() {
-    	return (List<Votacao>) votacaoService.findAllVotacaos();
+    public List<VotacaoDto> findAllVotacaos() {
+    	return votacaoService.findAllVotacaos();
     }
  
     @GetMapping("/{id}")
-    public ResponseEntity<Votacao> findVotacaoById(@PathVariable(value = "id") long id) throws Exception {
+    public ResponseEntity<VotacaoDto> findVotacaoById(@PathVariable(value = "id") long id) throws Exception {
 		return ResponseEntity.ok().body(votacaoService.findVotacaoById(id));
     }
     
     @GetMapping("/{user_id}/{pauta_id}/{voto}")
-    public ResponseEntity<Votacao> votarPauta(@PathVariable(value = "user_id") long user_id, 
+    public ResponseEntity<VotacaoDto> votarPauta(@PathVariable(value = "user_id") long user_id,
     		@PathVariable(value = "pauta_id") long pauta_id, 
     		@PathVariable(value = "voto") VotacaoEnum voto) throws Exception {
 		return ResponseEntity.ok().body(votacaoService.votarPauta(user_id,pauta_id,voto));
     }
  
     @PostMapping
-    public Votacao saveVotacao(@Validated @RequestBody Votacao Votacao) {
-    	return votacaoService.saveVotacao(Votacao);
+    public VotacaoDto saveVotacao(@Validated @RequestBody VotacaoDto votacaoDto) {
+    	return votacaoService.saveVotacao(votacaoDto);
     }
 }

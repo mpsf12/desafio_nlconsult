@@ -2,6 +2,7 @@ package com.nt.consult.desafio.controller;
 
 import java.util.*;
 
+import com.nt.consult.desafio.dto.UserDto;
 import com.nt.consult.desafio.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +19,17 @@ public class UserController {
     private UserService userService;
         
     @GetMapping
-    public List<User> findAllUsers() {
-    	return (List<User>) userService.findAllUsers();
+    public List<UserDto> findAllUsers() {
+    	return (List<UserDto>) userService.findAllUsers();
     }
  
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable(value = "id") long id) {
+    public ResponseEntity<UserDto> findUserById(@PathVariable(value = "id") long id) {
         return ResponseEntity.ok().body(userService.findUserById(id));
     }
  
     @PostMapping
-    public User saveUser(@Validated @RequestBody User user) {
-    	return userService.saveUser(user);
+    public UserDto saveUser(@Validated @RequestBody UserDto userDto) {
+    	return userService.saveUser(userDto);
     }
 }
