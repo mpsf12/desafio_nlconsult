@@ -8,12 +8,11 @@ import com.nt.consult.desafio.repository.UserRepository;
 import com.nt.consult.desafio.repository.VotacaoRepository;
 import com.nt.consult.desafio.service.VotacaoService;
 import com.nt.consult.desafio.util.HttpRequest;
-import com.nt.consult.desafio.util.UserPodeVotarEnum;
-import com.nt.consult.desafio.util.VotacaoEnum;
+import com.nt.consult.desafio.enums.UserPodeVotarEnum;
+import com.nt.consult.desafio.enums.VotacaoEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;

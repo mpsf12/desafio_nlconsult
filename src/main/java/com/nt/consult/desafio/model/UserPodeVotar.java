@@ -1,6 +1,6 @@
 package com.nt.consult.desafio.model;
 
-import com.nt.consult.desafio.util.UserPodeVotarEnum;
+import com.nt.consult.desafio.enums.UserPodeVotarEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

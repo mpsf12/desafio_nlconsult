@@ -2,7 +2,7 @@ package com.nt.consult.desafio.model;
 
 import javax.persistence.*;
 
-import com.nt.consult.desafio.util.VotacaoEnum;
+import com.nt.consult.desafio.enums.VotacaoEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

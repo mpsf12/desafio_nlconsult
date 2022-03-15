@@ -2,7 +2,7 @@ package com.nt.consult.desafio.controller;
 
 import com.nt.consult.desafio.model.Pauta;
 import com.nt.consult.desafio.service.PautaService;
-import com.nt.consult.desafio.util.ResultadoPautaEnum;
+import com.nt.consult.desafio.enums.ResultadoPautaEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.nt.consult.desafio.service;
 
 import com.nt.consult.desafio.model.Pauta;
-import com.nt.consult.desafio.util.ResultadoPautaEnum;
+import com.nt.consult.desafio.enums.ResultadoPautaEnum;
 
 import java.util.List;
 
